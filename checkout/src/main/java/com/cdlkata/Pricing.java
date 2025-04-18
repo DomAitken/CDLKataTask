@@ -5,15 +5,15 @@ import java.util.Set;
 public class Pricing {
     private final char sku; // Declared all necessary variables
     private final int itemPrice;
-    private final int dealsQuant;
+    private final int specialQty;
     private final int specialPrice;
 
     private static final Set<String> SKUs = Set.of("A", "B", "C", "D"); // Set so that other items can be added later if necessary
 
-    public Pricing(char sku, int unitPrice, int specialQty, int specialPrice) {
+    public Pricing(char sku, int itemPrice, int specialQty, int specialPrice) {
         this.sku = sku;
-        this.itemPrice = unitPrice; // Constructor for initialisation of variables
-        this.dealsQuant = specialQty;
+        this.itemPrice = itemPrice; // Constructor for initialisation of variables
+        this.specialQty = specialQty;
         this.specialPrice = specialPrice;
     }
 
@@ -26,10 +26,16 @@ public class Pricing {
     }
 
     public int priceCalc(int itemQuant) {
-        if (dealsQuant > 0) { // Check if there are any special deals
-            int deals = itemQuant / dealsQuant; // Check the number of complete deals you can get
-            int remainingItems = itemQuant % dealsQuant; // Check the number of remaining items
-            return deals * specialPrice + remainingItems * itemPrice; // Calculate final price
+        if (specialQty > 0) { // Check if there are any special deals
+            int deals = itemQuant / specialQty; // Check the number of complete deals you can get
+            int remainingItems = itemQuant % specialQty; // Check the number of remaining items
+            int totalPrice =  deals * specialPrice + remainingItems * itemPrice; // Calculate final price
+
+            if (deals > 0) {
+                System.out.println("Deal applied for item " + sku + ": " + specialPrice + " for " + itemQuant); // Outputs when a special deal has been applied
+            }
+
+            return totalPrice;
         }
 
         return itemQuant * itemPrice; // If there's no special deal, return standard price.
