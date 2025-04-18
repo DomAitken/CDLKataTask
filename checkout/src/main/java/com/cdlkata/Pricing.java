@@ -26,13 +26,13 @@ public class Pricing {
     }
 
     public int priceCalc(int itemQuant) {
-        if (specialQty > 0) { // Check if there are any special deals
+        if (specialQty > 0 && itemQuant >= specialQty) { // Check if there are any special deals
             int deals = itemQuant / specialQty; // Check the number of complete deals you can get
             int remainingItems = itemQuant % specialQty; // Check the number of remaining items
             int totalPrice =  deals * specialPrice + remainingItems * itemPrice; // Calculate final price
 
             if (deals > 0) {
-                System.out.println("Deal applied for item " + sku + ": " + specialPrice + " for " + itemQuant); // Outputs when a special deal has been applied
+                System.out.println("Deal applied for item " + sku + ": " + specialPrice + " for " + specialQty + " (applied " + deals + " time" + (deals > 1 ? "s" : "") + ")"); // Outputs when a special deal has been applied. The "(applied)" section I added after research as it was unclear in the terminal whether or not deals had been added multiple times where necessary
             }
 
             return totalPrice;
