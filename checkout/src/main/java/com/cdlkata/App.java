@@ -24,15 +24,18 @@ public class App {
                 continue;
             }
 
-            if (!input.matches("[a-dA-D]+") && !input.equalsIgnoreCase("total")) { // Makes sure the input is either an SKU or 'total', otherwise the input is ruled invalid. '+' allows for multiple inputs from that character set
-                System.out.println("Invalid input");
-            } else if (input.equalsIgnoreCase("total")) { // Checks to see if the user input is 'total' and begins to tally the price immediately if so 
+            if (input.equalsIgnoreCase("total")) { 
                 System.out.println("Final Total: " + checkout.getTotalInPounds());
                 break;
-            } else {
+            }
+            
+            try {
                 for (char item : input.toCharArray()) {
-                    checkout.scanningItem(item);
+                    checkout.scanningItem(item); // This will throw if the inputted item isn't in pricing
                 }
+            } catch (IllegalArgumentException ex) {
+                System.out.println(ex.getMessage());
+                continue;
             }
         }
         
