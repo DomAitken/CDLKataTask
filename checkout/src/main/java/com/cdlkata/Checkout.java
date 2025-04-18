@@ -14,8 +14,7 @@ public class Checkout {
     public void scanningItem(char item) { // Method for processing individually scanned items
         item = Character.toUpperCase(item);
         if (!pricing.containsKey(item)) {
-            System.out.println("Unknown item: " + item);
-            return;
+            throw new IllegalArgumentException("Unknown item: " + item); // An item that isn't in the pricing map will throw an illegal argument exception and be flagged as unknown
         }
         itemNum.put(item, itemNum.getOrDefault(item, 0) + 1); // Add the item to the basket, using the .put method in order to edit the map
         System.out.println("Scanned: " + item);
