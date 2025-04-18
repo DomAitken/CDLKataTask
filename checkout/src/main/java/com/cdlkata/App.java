@@ -19,11 +19,6 @@ public class App {
         while (true) { // Infinite loop until user types 'total'
             String input = scanner.nextLine().trim(); // .trim() was something I discovered while looking for a way to prevent whitespace
 
-            if (input.isEmpty()) {
-                System.out.println("Please enter a valid SKU or type 'total'"); // Added this if statement to separate each input if the user wanted to, making input errors more unlikely
-                continue;
-            }
-
             if (input.equalsIgnoreCase("total")) { 
                 System.out.println("Final Total: " + checkout.getTotalInPounds());
                 break;
