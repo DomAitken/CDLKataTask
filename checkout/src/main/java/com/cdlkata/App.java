@@ -18,14 +18,24 @@ public class App {
         System.out.println("Enter SKUs to scan (type 'total' to finish):");
         while (true) { // Infinite loop until user types 'total'
             String input = scanner.nextLine().trim(); // .trim() was something I discovered while looking for a way to prevent whitespace
-            if (input.equalsIgnoreCase("total")) { // Checks to see if the user input is 'total' and begins to tally the price immediately if so 
+
+            if (input.isEmpty()) {
+                System.out.println("Please enter a valid SKU or type 'total'"); // Added this if statement to separate each input if the user wanted to, making input errors more unlikely
+                continue;
+            }
+
+            if (!input.matches("[a-dA-D]+") && !input.equalsIgnoreCase("total")) { // Makes sure the input is either an SKU or 'total', otherwise the input is ruled invalid. '+' allows for multiple inputs from that character set
+                System.out.println("Invalid input");
+            } else if (input.equalsIgnoreCase("total")) { // Checks to see if the user input is 'total' and begins to tally the price immediately if so 
                 System.out.println("Final Total: " + checkout.getTotalInPounds());
                 break;
-            } else if (!input.matches("[a-dA-D]+") && !input.equalsIgnoreCase("total")) { // Makes sure the input is either an SKU or 'total', otherwise the input is ruled invalid
-                System.out.println("Invalid input");
+            } else {
+                for (char item : input.toCharArray()) {
+                    checkout.scanningItem(item);
+                }
             }
         }
-
-        scanner.close(); // Scanner closed
+        
+        scanner.close(); // Scanner closed outside while loop. Was throwing IllegalStateException earlier as it was in the while loop
     }
 }
