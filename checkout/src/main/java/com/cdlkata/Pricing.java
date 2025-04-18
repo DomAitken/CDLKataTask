@@ -3,22 +3,22 @@ package com.cdlkata;
 import java.util.Set;
 
 public class Pricing {
-    private final String sku; // Declared all necessary variables
+    private final char sku; // Declared all necessary variables
     private final int itemPrice;
     private final int dealsQuant;
     private final int specialPrice;
 
     private static final Set<String> SKUs = Set.of("A", "B", "C", "D"); // Set so that other items can be added later if necessary
 
-    public Pricing(String sku, int unitPrice, int specialQty, int specialPrice) {
+    public Pricing(char sku, int unitPrice, int specialQty, int specialPrice) {
         this.sku = sku;
         this.itemPrice = unitPrice; // Constructor for initialisation of variables
         this.dealsQuant = specialQty;
         this.specialPrice = specialPrice;
     }
 
-    public String getSku() {
-        if (!SKUs.contains(sku.toUpperCase())) {
+    public char getSku() {
+        if (!SKUs.contains(Character.toUpperCase(sku))) {
             throw new IllegalStateException("Invalid item:" + sku); // Getter accesses the private SKU value and validates it
         }
 
